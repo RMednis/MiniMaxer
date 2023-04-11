@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>MiniMaxer</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"
+    />
+
+    <script src="js/bootstrap.bundle.js"></script>
+
+    <script src="./js/gametree.js"></script>
+    <script src="./js/index.js"></script>
+  </head>
+  <body>
+    <!-- Title -->
+    <h1 class="text-center fw-bold text-dark mt-2 mb-2">Office Politics</h1>
+    <hr />
+
+    <div class="cotnainer pl-5 pr-5">
+      <!-- Top Row-->
+      <div class="row">
+        <div class="col-sm">
+          <h2 class="text-center fw-light">Hire Engineers</h2>
+
+          <div class="d-flex justify-content-center align-items-center">
+            <button
+              type="button"
+              class="btn btn-danger m-2"
+              onclick="hireSenior()"
+            >
+              Senior <br />(13 euros)
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-warning m-2"
+              onclick="hireJunior()"
+            >
+              Junior <br />
+              (6 euros)
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-success m-2"
+              onclick="hireIntern()"
+            >
+              Intern <br />
+              (3 euros)
+            </button>
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <h2 class="text-center fw-light">Current weekly budget</h2>
+          <h1 class="text-center fw-bold">140€</h1>
+        </div>
+      </div>
+
+      <!-- Bottom Row-->
+      <div class="row mt-5">
+        <div class="col-sm">
+          <h3 class="text-center">Activity Log</h3>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">User</th>
+                <th scope="col">Hire</th>
+                <th scope="col">Cost</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div class="col-sm">
+          <div class="row">
+            <div class="col-sm">
+              <h2 class="text-center">Time employed</h2>
+              <h1 class="text-center" id="timesurvived">0 days 0 hours</h1>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#gameOverModal"
+        >
+          Test
+        </button>
+
+        <!-- Game Over modal-->
+        <div
+          class="modal fade"
+          id="gameOverModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="gameOverModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="gameOverModal">Game Over</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <h3>You weren't fired! <i class="bi bi-emoji-smile"></i></h3>
+                <p>Time survived: <b>0 days 0 hours</b></p>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  onclick="resetGame()"
+                  data-bs-dismiss="modal"
+                >
+                  Find another job...
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
