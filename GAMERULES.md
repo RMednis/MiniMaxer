@@ -14,3 +14,11 @@ They are all contractors you can pull in from other teams for an hour, and you k
 so your only choice is to throw D(ai)ve under the bus... It's fine... You're pretty sure he's just one of those new fancy AI models anyway.
 
 You and D(ai)ve swap places every hour, since your team can only have one extra employee at a time.
+
+
+
+
+ Player turn
+ Check Win/Lose State
+ AI turn
+ Check Win/Lose State

@@ -16,11 +16,34 @@
     <script src="js/bootstrap.bundle.js"></script>
 
     <script src="./js/gametree.js"></script>
+    <script src="./js/gameSettings.js"></script>
+    <script src="./js/aiRandom.js"></script>
     <script src="./js/index.js"></script>
   </head>
   <body>
     <!-- Title -->
-    <h1 class="text-center fw-bold text-dark mt-2 mb-2">Office Politics</h1>
+    <div class="container">
+      <div class="row">
+        <!-- Settings Cog -->
+        <div class="col-1">
+          <button
+            type="button"
+            class="btn btn-outline-dark btn-lg mt-2 mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#gameSettingsModal">
+            <i class="text-center bi bi-gear"></i>
+          </button>
+          
+        </div>
+        <div class="col-sm">
+          <h1 class="text-center fw-bold text-dark mt-2 mb-2">Office Politics</h1>
+        </div>
+        
+        
+        
+      </div>
+    </div>
+    
     <hr />
 
     <div class="cotnainer pl-5 pr-5">
@@ -32,16 +55,18 @@
           <div class="d-flex justify-content-center align-items-center">
             <button
               type="button"
+              id="hireSenior"
               class="btn btn-danger m-2"
-              onclick="hireSenior()"
+              onclick="hireSeniorButton()"
             >
               Senior <br />(13 euros)
             </button>
 
             <button
               type="button"
+              id="hireJunior"
               class="btn btn-warning m-2"
-              onclick="hireJunior()"
+              onclick="hireJuniorButton()"
             >
               Junior <br />
               (6 euros)
@@ -49,8 +74,9 @@
 
             <button
               type="button"
+              id="hireIntern"
               class="btn btn-success m-2"
-              onclick="hireIntern()"
+              onclick="hireInternButton()"
             >
               Intern <br />
               (3 euros)
@@ -60,7 +86,11 @@
 
         <div class="col-sm">
           <h2 class="text-center fw-light">Current weekly budget</h2>
-          <h1 class="text-center fw-bold">140€</h1>
+          
+          <!-- Euro sign next to the value-->
+          <h1 class="text-center fw-bold">
+            <h1 class="text-center fw-bold" id="budget">140<i class="bi bi-currency-euro"></i></h1>
+            
         </div>
       </div>
 
@@ -69,34 +99,34 @@
         <div class="col-sm">
           <h3 class="text-center">Activity Log</h3>
 
-          <table class="table">
-            <thead>
+          <table class="table mh-50">
+            <thead class="table-dark">
               <tr>
                 <th scope="col">User</th>
                 <th scope="col">Hire</th>
                 <th scope="col">Cost</th>
+                <th scope="col">Budget</th>
               </tr>
             </thead>
+            <tbody id="activityLog">
+              
+            </tbody>
           </table>
         </div>
 
         <div class="col-sm">
           <div class="row">
             <div class="col-sm">
-              <h2 class="text-center">Time employed</h2>
-              <h1 class="text-center" id="timesurvived">0 days 0 hours</h1>
+              <h3 class="text-center">Time employed</h>
+              <h2 class="text-center" id="time">0 days 0 hours</h2>
+            </div>
+            <div class="col-sm">
+              <h3 class="text-center">Current Turn</h2>
+              <h2 class="text-center" id="currentPlayer">???</h1>
             </div>
           </div>
         </div>
 
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#gameOverModal"
-        >
-          Test
-        </button>
 
         <!-- Game Over modal-->
         <div
@@ -106,31 +136,26 @@
           role="dialog"
           aria-labelledby="gameOverModalLabel"
           aria-hidden="true"
+          data-bs-backdrop="false"
         >
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="gameOverModal">Game Over</h5>
+                <h5 class="modal-title" id="gameOverModalLabel">Game Over</h5>
                 <button
                   type="button"
                   class="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                  onclick="resetGame()"
                 ></button>
               </div>
               <div class="modal-body">
-                <h3>You weren't fired! <i class="bi bi-emoji-smile"></i></h3>
-                <p>Time survived: <b>0 days 0 hours</b></p>
+                <h3 id="gameOverModalGameResult"></h3>
+                <p id="gameOverModalGameDetails"></p>
               </div>
 
               <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
 
                 <button
                   type="button"
@@ -145,6 +170,74 @@
           </div>
         </div>
       </div>
+
+      <!-- Settings Modal -->
+      <div
+          class="modal fade"
+          id="gameSettingsModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="gameSettingsModalLabel"
+          aria-hidden="true"
+          
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="gameSettingsModalLabel">Manager Mode <i>(Settings)</i></h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="settingsBudgetAmount" class="form-label">Project Budget</label>
+                  <input type="number" class="form-control" id="settingsBudgetAmount" placeholder="140">
+                </div>
+                <div class="mb-3">
+                  <label for="algorithmButton" class="form-label">AI Algorithm </label>
+                  <br>
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="algorithmButton">
+                    Random
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" type="button" onclick="setAlgo(this)">MinMax</a></li>
+                    <li><a class="dropdown-item" type="button" onclick="setAlgo(this)">Random</a></li>
+                  </ul>
+                </div>
+                <div class="mb-3">
+                  <label for="playerButton" class="form-label">Who starts first?</label>
+                  <br>
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="playerButton">
+                    You
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" type="button" onclick="setStartingPlayer(this)">You</a></li>
+                    <li><a class="dropdown-item" type="button" onclick="setStartingPlayer(this)">D(AI)ve</a></li>
+                  </ul>
+                </div>
+
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                  onclick="saveSettings()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </body>
 </html>
