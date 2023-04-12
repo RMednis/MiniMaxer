@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Boilerplate HTML -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>MiniMaxer</title>
+    
+    <title>Office Politics</title>
 
-    <link rel="stylesheet" href="style.css" />
+    <!-- Bootstrap 5's CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"
     />
 
+    <!-- Bootstrap 5's JS -->
     <script src="js/bootstrap.bundle.js"></script>
 
-    <script src="./js/gametree.js"></script>
+    <!-- Game Settings -->
     <script src="./js/gameSettings.js"></script>
+
+    <!-- Game Logic -->
     <script src="./js/aiRandom.js"></script>
+    <script src="./js/aiMinMax.js"></script>
     <script src="./js/index.js"></script>
+    
   </head>
   <body>
     <!-- Title -->
@@ -38,9 +45,16 @@
         <div class="col-sm">
           <h1 class="text-center fw-bold text-dark mt-2 mb-2">Office Politics</h1>
         </div>
-        
-        
-        
+        <div class="col-1">
+          <button
+            type="button"
+            class="btn btn-outline-dark btn-lg mt-2 mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#gameInfoModal">
+            <i class="text-center bi bi-book"></i>
+          </button>
+          
+        </div>
       </div>
     </div>
     
@@ -57,7 +71,7 @@
               type="button"
               id="hireSenior"
               class="btn btn-danger m-2"
-              onclick="hireSeniorButton()"
+              onclick="hireSenior('Human')"
             >
               Senior <br />(13 euros)
             </button>
@@ -66,7 +80,7 @@
               type="button"
               id="hireJunior"
               class="btn btn-warning m-2"
-              onclick="hireJuniorButton()"
+              onclick="hireJunior('Human')"
             >
               Junior <br />
               (6 euros)
@@ -76,7 +90,7 @@
               type="button"
               id="hireIntern"
               class="btn btn-success m-2"
-              onclick="hireInternButton()"
+              onclick="hireIntern('Human')"
             >
               Intern <br />
               (3 euros)
@@ -201,11 +215,12 @@
                   <label for="algorithmButton" class="form-label">AI Algorithm </label>
                   <br>
                   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="algorithmButton">
-                    Random
+                    MiniMax (AB)
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" type="button" onclick="setAlgo(this)">MinMax</a></li>
+                    <li><a class="dropdown-item" type="button" onclick="setAlgo(this)">MiniMax</a></li>
                     <li><a class="dropdown-item" type="button" onclick="setAlgo(this)">Random</a></li>
+                    <li><a class="dropdown-item" type="button" onclick="setAlgo(this)">MiniMax (AB)</a></li>
                   </ul>
                 </div>
                 <div class="mb-3">
@@ -229,7 +244,7 @@
                   data-bs-dismiss="modal"
                   onclick="saveSettings()"
                 >
-                  Save
+                  Restart Game
                 </button>
               </div>
             </div>
@@ -238,6 +253,67 @@
       </div>
 
 
+      <!-- Game info modal -->
+      <div
+          class="modal fade"
+          id="gameInfoModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="gameInfoModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="gameSettingsModalLabel">Backstory/Game rules</i></h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p>Your boss has been mad at your team for overspending their budget during the last year, so much so
+                  that they cut your teams size to just 2 employees... you and D(AI)ve. <br><br>
+                  
+                  They have given your team a very strict budget for a new software development project,
+                  and considering how many cuts have happened last time, you're pretty sure your head is next on the chopping block if you go over the budget.
+                  <br><br>
+                  <strong>You and D(AI)ve are both asked to manage the engineering teams this year, you have 3 levels of engineers: </strong>
+                </p>
+                <ul>
+                  <li><strong>Senior engineers</strong>, that cost 13 euros an hour </li>
+                  <li><strong>Junior engineers</strong>, that cost 6 euros an hour</li>
+                  <li><strong>Interns</strong>, that cost 3 euros an hour</li>
+                </ul>
+                <p>
+                  They are all contractors you can pull in from other teams for an hour,<br>
+                  You know that the budget is not going to be enough for the scale of the project, <br>
+                  Which means your only choice is to throw D(ai)ve under the bus... <br> <br>
+                  <i>It's fine... You're pretty sure he's just one of those new fancy AI models anyway.</i><br><br>
+                  You and D(ai)ve swap places every hour, since your team <br> can only have one extra employee at a time. <br>
+                  If you the budget ends up a <b>perfect 0</b>, neither of you are getting fired. <br> <br>
+                  <b>Otherwise whoever is the one to go under first, loses!</b>
+                  
+                </p>
+
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Ok...
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of modals -->
     </div>
   </body>
 </html>
